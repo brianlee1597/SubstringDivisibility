@@ -61,18 +61,18 @@ public class SubstringDivisibility {
                 int lastOne = perm % 10;
 
                 if (i == 0) {
-                    if (primesLimit == 1) {
-                        long k = (long) (Math.log(inputBitSet ^ bits) / Math.log(2));
-                        long firstDigit = k * (long) Math.pow(10, inputLength - 1);
-                        validPermList.add(perm + firstDigit);
-                        totalSum = totalSum + perm + firstDigit;
-                    } else { // we add the 4 digit to the list and initialize the map.
+                    if (primesLimit != 1) {
                         if (longMap[0][lastTwo] == null)
                             longMap[0][lastTwo] = new ArrayList<>();
 
                         longMap[0][lastTwo].add(new long[] { (long) perm, (long) bits });
+                        continue threeDigitPermutations;
                     }
 
+                    long k = (long) (Math.log(inputBitSet ^ bits) / Math.log(2));
+                    long firstDigit = k * (long) Math.pow(10, inputLength - 1);
+                    validPermList.add(perm + firstDigit);
+                    totalSum = totalSum + perm + firstDigit;
                     continue threeDigitPermutations;
                 }
 
@@ -91,18 +91,18 @@ public class SubstringDivisibility {
                     if ((bitSet & (1 << lastOne)) != 0)
                         continue makeNextPrimeArr;
 
-                    if (i == primesLimit - 1) {
-                        long validNum = (value * 10) + lastOne;
-                        long latestBitSet = bitSet | (1 << lastOne);
-                        long k = (long) (Math.log(inputBitSet ^ latestBitSet) / Math.log(2));
-                        long firstDigit = k * (long) Math.pow(10, inputLength - 1);
-
-                        validPermList.add(validNum + firstDigit);
-                        totalSum = totalSum + validNum + firstDigit;
+                    if (i != primesLimit - 1) {
+                        nextPrimeArr.add(new long[] { (value * 10) + lastOne, bitSet | (1 << lastOne) });
                         continue makeNextPrimeArr;
                     }
 
-                    nextPrimeArr.add(new long[] { (value * 10) + lastOne, bitSet | (1 << lastOne) });
+                    long validNum = (value * 10) + lastOne;
+                    long latestBitSet = bitSet | (1 << lastOne);
+                    long k = (long) (Math.log(inputBitSet ^ latestBitSet) / Math.log(2));
+                    long firstDigit = k * (long) Math.pow(10, inputLength - 1);
+
+                    validPermList.add(validNum + firstDigit);
+                    totalSum = totalSum + validNum + firstDigit;
                 }
 
                 if (i != primesLimit - 1)
