@@ -69,10 +69,10 @@ public class SubstringDivisibility {
                         continue threeDigitPermutations;
                     }
 
-                    long k = (long) (Math.log(inputBitSet ^ bits) / Math.log(2));
-                    long firstDigit = k * (long) Math.pow(10, inputLength - 1);
-                    validPermList.add(perm + firstDigit);
-                    totalSum = totalSum + perm + firstDigit;
+                    long lastLeftDigit = (long) (Math.log(inputBitSet ^ bits) / Math.log(2));
+                    lastLeftDigit = lastLeftDigit * (long) Math.pow(10, inputLength - 1);
+                    validPermList.add(perm + lastLeftDigit);
+                    totalSum = totalSum + perm + lastLeftDigit;
                     continue threeDigitPermutations;
                 }
 
@@ -98,11 +98,11 @@ public class SubstringDivisibility {
 
                     long validNum = (value * 10) + lastOne;
                     long latestBitSet = bitSet | (1 << lastOne);
-                    long k = (long) (Math.log(inputBitSet ^ latestBitSet) / Math.log(2));
-                    long firstDigit = k * (long) Math.pow(10, inputLength - 1);
+                    long lastLeftDigit = (long) (Math.log(inputBitSet ^ latestBitSet) / Math.log(2));
+                    lastLeftDigit = lastLeftDigit * (long) Math.pow(10, inputLength - 1);
 
-                    validPermList.add(validNum + firstDigit);
-                    totalSum = totalSum + validNum + firstDigit;
+                    validPermList.add(validNum + lastLeftDigit);
+                    totalSum = totalSum + validNum + lastLeftDigit;
                 }
 
                 if (i != primesLimit - 1)
